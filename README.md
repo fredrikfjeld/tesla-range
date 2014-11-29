@@ -10,6 +10,7 @@ http://range.fjeld.io/
 
 ### TODO
 
+* Fix how it looks in the browser of Model S (doesen´t look too great currenty).
 * Settings saved in cookie.
 * Option for imperial units in settings.
 * Clean up the ugly javascript.
