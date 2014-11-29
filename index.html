@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Tesla range calculator</title>
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="cover.css" rel="stylesheet">
+
+    <script type="text/javascript">
+
+    function showRange()
+    {
+        document.getElementById('chargeDiv').style.display = "none";
+        document.getElementById('rangeDiv').style.display = "block";
+        document.getElementById('settingsDiv').style.display = "none";
+
+        document.getElementById('rangeLink').className = "active";
+        document.getElementById('chargeLink').className = "";
+        document.getElementById('settingsLink').className = "";
+    }
+
+    function showCharge()
+    {
+        document.getElementById('rangeDiv').style.display = "none";
+        document.getElementById('chargeDiv').style.display = "block";
+        document.getElementById('settingsDiv').style.display = "none";
+
+        document.getElementById('chargeLink').className = "active";
+        document.getElementById('rangeLink').className = "";
+        document.getElementById('settingsLink').className = "";
+    }
+
+    function showSettings()
+    {
+        document.getElementById('rangeDiv').style.display = "none";
+        document.getElementById('chargeDiv').style.display = "none";
+        document.getElementById('settingsDiv').style.display = "block";
+
+        document.getElementById('chargeLink').className = "";
+        document.getElementById('rangeLink').className = "";
+        document.getElementById('settingsLink').className = "active";
+    }
+
+    function calculateRange()
+    {
+
+        var settingsForm = document.forms["settingsForm"];
+        var typical = settingsForm.elements["typical"].value;
+
+        var rangeForm = document.forms["rangeForm"];
+        var typicalRange = rangeForm.elements["typicalRange"].value;
+        var consumption = rangeForm.elements["consumption"].value;
+
+        var factor = consumption / typical;
+        var realRange = typicalRange / factor;
+
+        document.getElementById('rangeDisplay').innerHTML = "You can drive " + realRange.toFixed(0) + " km";
+    }
+
+    function calculateCharge()
+    {
+        var settingsForm = document.forms["settingsForm"];
+        var typical = settingsForm.elements["typical"].value;
+
+        var chargeForm = document.forms["chargeForm"];
+        var distance = chargeForm.elements["distance"].value;
+        var consumption = chargeForm.elements["consumption"].value;
+
+        var factor = consumption / typical;
+        var chargeNeeded = distance * factor;
+
+        document.getElementById('chargeDisplay').innerHTML = "You need to charge " + chargeNeeded.toFixed(0) + " km typical range";
+    }
+    </script>
+
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h3 class="masthead-brand">Tesla range calculator</h3>
+                        <nav>
+                            <ul class="nav masthead-nav">
+                                <li id="rangeLink" class="active"><a onclick="showRange()">Range</a></li>
+                                <li id="chargeLink"><a onclick="showCharge()">Charging</a></li>
+                                <li id="settingsLink"><a onclick="showSettings()">Settings</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Range calulation -->
+                <div class="inner cover" id="rangeDiv">
+
+                    <h1 class="clover-heading">Calculate range</h1>
+                    <p class="lead">How far can you go?</p>
+
+                    <form class="form-inline" role="form" id="rangeForm">
+                        <div class="form-group">
+                            <label for="typicalRange">Typical range</label>
+                            <input type="number" class="form-control" id="typicalRange" placeholder="Enter typical range">
+                        </div>
+                        <div class="form-group">
+                            <label for="consumption">Average Wh/km</label>
+                            <input type="number" class="form-control" id="consumption" placeholder="Enter Wh/km">
+                        </div>
+                        <button type="button" class="btn btn-default" onclick="calculateRange()">Calculate</button>
+                    </form>
+
+                    <h1 id="rangeDisplay"></h1>
+                </div>
+
+                <!-- Charge calulation -->
+                <div class="inner cover" id="chargeDiv" style="display:none;">
+
+                    <h1 class="clover-heading">Calculate charge</h1>
+                    <p class="lead">How much do you need to charge?</p>
+
+                    <form class="form-inline" role="form" id="chargeForm">
+                        <div class="form-group">
+                            <label for="distance">Distance</label>
+                            <input type="number" class="form-control" id="distance" placeholder="Kilometers to go">
+                        </div>
+                        <div class="form-group">
+                            <label for="consumption">Average Wh/km</label>
+                            <input type="number" class="form-control" id="consumption" placeholder="Enter Wh/km">
+                        </div>
+                        <button type="button" class="btn btn-default" onclick="calculateCharge()">Calculate</button>
+                    </form>
+
+                    <h1 id="chargeDisplay"></h1>
+                </div>
+
+                <div class="inner cover" id="settingsDiv" style="display:none;">
+
+                    <h1 class="clover-heading">Settings</h1>
+                    <p class="lead">Only change this if you know what you are doing.</p>
+                    <p>Typical energy consumption is displayed as 200 Wh/km in the car, but <a href="https://www.youtube.com/watch?v=y7Xp7zSp7Rs">real world tests have revealed it to differ from car to car</a>.</p>
+                    <p>It seems a typical energy consumption of 187 Wh/km is closer to the truth and is therefore a good default value. You can change it here if your car seems to have a different value.</p>
+
+                    <form class="form-inline" role="form" id="settingsForm">
+                        <div class="form-group">
+                            <label for="typical">Typical consumption</label>
+                            <input type="number" class="form-control" id="typical" placeholder="187" value="187">
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="mastfoot">
+                    <div class="inner">
+                        <p>Fredrik Fjeld, 2014</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
