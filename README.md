@@ -7,3 +7,4 @@ http://range.fjeld.io/
 
 ### TODO
 * Settings saved in cookie.
+* Option for imperial units in settings.
