@@ -61,3 +61,22 @@ function calculateCharge()
 
     document.getElementById('chargeDisplay').innerHTML = "You need to charge " + chargeNeeded.toFixed(0) + " km typical range";
 }
+
+
+// Original JavaScript code by Chirp Internet: www.chirp.com.au
+// Please acknowledge use of this code by including this header.
+
+function getCookie(name)
+{
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+}
+
+var today = new Date();
+var expiry = new Date(today.getTime() + 365 * 24 * 3600 * 1000); // plus 365 days
+
+function setCookie(name, value)
+{
+    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+}
