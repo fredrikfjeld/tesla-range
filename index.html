@@ -2,130 +2,135 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="Range and charge calculator for Tesla and other EVs. Provide distance and average energy consumption and recieve your realistic range.">
 		<meta name="keywords" content="tesla,electric,car,range,calculator,charge,ev,evs,typical,rated,realistic,model s,p85,s85,s60,p85d,s85d">
 
-    <title>Tesla range calculator</title>
+  <title>Tesla range calculator</title>
 
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="cover.css" rel="stylesheet">
-
-    <script type="text/javascript" src="scripts.js"></script>
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="cover.css" rel="stylesheet">
 
 </head>
 
 <body>
-    <div class="site-wrapper">
-        <div class="site-wrapper-inner">
-            <div class="cover-container">
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+      <div class="cover-container">
 
-                <div class="masthead clearfix">
-                    <div class="inner">
-                        <h3 class="masthead-brand">Tesla range calculator</h3>
-                        <nav>
-                            <ul class="nav masthead-nav">
-                                <li id="rangeLink" class="active"><a onclick="showRange()">Range</a></li>
-                                <li id="chargeLink"><a onclick="showCharge()">Charging</a></li>
-                                <li id="settingsLink"><a onclick="showSettings()">Settings</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-
-                <!-- Range calulation -->
-                <div class="inner cover" id="rangeDiv">
-
-                    <h1 class="clover-heading">Calculate range</h1>
-                    <p class="lead">How far can you go?</p>
-
-                    <form class="form-inline" role="form" id="rangeForm">
-                        <div class="form-group">
-                            <label for="typicalRange">Typical range</label>
-                            <input type="number" class="form-control" id="typicalRange" placeholder="Enter typical range">
-                        </div>
-                        <div class="form-group">
-                            <label for="consumption">Average Wh/km</label>
-                            <input type="number" class="form-control" id="consumption" placeholder="Enter Wh/km">
-                        </div>
-                        <button type="button" class="btn btn-default" onclick="calculateRange()">Calculate</button>
-                    </form>
-
-                    <h1 id="rangeDisplay"></h1>
-                </div>
-
-                <!-- Charge calulation -->
-                <div class="inner cover" id="chargeDiv" style="display:none;">
-
-                    <h1 class="clover-heading">Calculate charge</h1>
-                    <p class="lead">How much do you need to charge?</p>
-
-                    <form class="form-inline" role="form" id="chargeForm">
-                        <div class="form-group">
-                            <label for="distance">Distance</label>
-                            <input type="number" class="form-control" id="distance" placeholder="Kilometers to go">
-                        </div>
-                        <div class="form-group">
-                            <label for="consumption">Average Wh/km</label>
-                            <input type="number" class="form-control" id="consumption" placeholder="Enter Wh/km">
-                        </div>
-                        <button type="button" class="btn btn-default" onclick="calculateCharge()">Calculate</button>
-                    </form>
-
-                    <h1 id="chargeDisplay"></h1>
-                </div>
-
-                <div class="inner cover" id="settingsDiv" style="display:none;">
-
-                    <h1 class="clover-heading">Settings</h1>
-                    <p class="lead">Only change this if you know what you are doing.</p>
-                    <p>Typical energy consumption is displayed as 200 Wh/km in the car, but <a href="https://www.youtube.com/watch?v=y7Xp7zSp7Rs">real world tests have revealed it to differ from car to car (Youtube-link)</a>.</p>
-                    <p>It seems a typical energy consumption of 187 Wh/km is closer to the truth and is therefore a good default value. You can change it here if your car appears to have a different value.</p>
-
-                    <form class="form-inline" role="form" id="settingsForm">
-                        <div class="form-group">
-                            <label for="typical">Typical consumption</label>
-                            <input type="number" class="form-control" id="typical" placeholder="187" value="187" onblur="setTypical()">
-                        </div>
-                    </form>
-
-                    <!-- Store and retrieve typical consumption in cookie -->
-                    <script type="text/javascript">
-                    function setTypical()
-                    {
-                        typical = document.forms["settingsForm"].elements["typical"].value;
-                        setCookie("typical", typical);
-                    }
-
-                    if(getCookie("typical"))
-                        {
-                            document.forms["settingsForm"].elements["typical"].value = getCookie("typical");
-                        }
-
-                    </script>
-
-                </div>
-
-                <div class="mastfoot">
-                    <div class="inner">
-                        <p>Fredrik Fjeld, 2014. <a href="https://github.com/fredrikfjeld/tesla-range">Source available on GitHub</a></p>
-                    </div>
-                </div>
-
-            </div>
+        <div class="masthead clearfix">
+          <div class="inner">
+            <h3 class="masthead-brand">Tesla range calculator</h3>
+            <nav>
+              <ul class="nav masthead-nav">
+                <li id="rangeLink" class="active"><a onclick="showRange()">Range</a></li>
+                <li id="chargeLink"><a onclick="showCharge()">Charging</a></li>
+                <li id="settingsLink"><a onclick="showSettings()">Settings</a></li>
+              </ul>
+            </nav>
+          </div>
         </div>
+
+        <!-- Range calulation -->
+        <div class="inner cover" id="rangeDiv">
+
+          <h1 class="clover-heading">Calculate range</h1>
+          <p class="lead">How far can you go?</p>
+
+          <form class="form-inline" role="form" id="rangeForm">
+            <div class="form-group">
+              <label for="typicalRange">Typical range</label>
+              <input type="number" class="form-control" id="typicalRange" placeholder="Enter typical range">
+            </div>
+            <div class="form-group">
+              <label id="rangeConsumptionLabel" for="rangeConsumption">Average Wh/km</label>
+              <input type="number" class="form-control" id="rangeConsumption" placeholder="Enter Wh/km">
+            </div>
+            <button type="button" class="btn btn-default" onclick="calculateRange()">Calculate</button>
+          </form>
+
+          <h1 id="rangeDisplay">&nbsp;</h1>
+        </div>
+
+        <!-- Charge calulation -->
+        <div class="inner cover" id="chargeDiv" style="display:none;">
+
+          <h1 class="clover-heading">Calculate charge</h1>
+          <p class="lead">How much do you need to charge?</p>
+
+          <form class="form-inline" role="form" id="chargeForm">
+            <div class="form-group">
+              <label for="distance">Distance</label>
+              <input type="number" class="form-control" id="distance" placeholder="Kilometers to go">
+            </div>
+            <div class="form-group">
+              <label id="chargeConsumptionLabel" for="chargeConsumption">Average Wh/km</label>
+              <input type="number" class="form-control" id="chargeConsumption" placeholder="Enter Wh/km">
+            </div>
+            <button type="button" class="btn btn-default" onclick="calculateCharge()">Calculate</button>
+          </form>
+
+          <h1 id="chargeDisplay">&nbsp;</h1>
+        </div>
+
+        <div class="inner cover" id="settingsDiv" style="display:none;">
+
+          <h1 class="clover-heading">Settings</h1>
+
+            <form class="form text-left" role="form" id="unitForm" >
+              <h2>Units</h2>
+              <div class="form-group col-sm-12">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="unit" id="kilometersRadio" value="km" onclick="setUnit('km')" >
+                    Metric / kilometers
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="unit" id="milesRadio" value="miles" onclick="setUnit('miles')" >
+                    Imperial / miles
+                  </label>
+                </div>
+              </div>
+            </form>
+
+            <form class="form text-left" role="form" id="settingsForm">
+              <h2>Typical consumption</h2>
+              <p class="lead">Only change this if you know what you are doing.</p>
+              <p>Typical energy consumption is displayed as <span id="displayedEnergyConsumption">200 Wh/km</span> in the car, but <a href="https://www.youtube.com/watch?v=y7Xp7zSp7Rs">real world tests have revealed it to differ from car to car (Youtube-link)</a>.</p>
+              <p>It seems a typical energy consumption of <span id="typicalConsumption">187 Wh/km</span> is closer to the truth and is therefore a good default value. You can change it here if your car appears to have a different value.</p>
+
+              <div class="form-group">
+                <label for="typical">Typical consumption</label>
+                <input type="number" class="form-control" id="typical" placeholder="187" value="187" onblur="setTypical()">
+              </div>
+            </form>
+
+            <script type="text/javascript" src="scripts.js"></script>
+
+        </div>
+
+        <div class="mastfoot">
+          <div class="inner">
+            <p>Fredrik Fjeld, 2015. <a href="https://github.com/fredrikfjeld/tesla-range">Source available on GitHub</a></p>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-57261923-1', 'auto');
-      ga('send', 'pageview');
-    </script>
+    ga('create', 'UA-57261923-1', 'auto');
+    ga('send', 'pageview');
+  </script>
 
 </body>
 
