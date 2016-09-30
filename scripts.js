@@ -80,7 +80,6 @@ function calculateCharge()
   document.getElementById('chargeDisplay').innerHTML = "You need to charge " + chargeNeeded.toFixed(0) + " " + unit + " typical range";
 }
 
-
 // Original JavaScript code by Chirp Internet: www.chirp.com.au
 // Please acknowledge use of this code by including this header.
 // Start
@@ -105,22 +104,23 @@ function setTypical(value)
   typical = value;
   document.getElementById("typical").value = typical;
   setCookie("typical", typical);
+
+  unit = getCookie("unit");
+  window.history.pushState('page', 'Tesla range calculator', '/?unit='+unit+'&typical='+typical);
 }
 
 function setUnit(unit)
 {
   setCookie("unit", unit);
   changeText(unit);
+
+  typical = getCookie('typical');
+  window.history.pushState('page', 'Tesla range calculator', '/?unit='+unit+'&typical='+typical);
   //alert(unit);
 }
 
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-}
-
-if(getCookie("typical"))
-{
-  document.forms["settingsForm"].elements["typical"].value = getCookie("typical");
 }
 
 function kmToMiles(km)
@@ -130,7 +130,7 @@ function kmToMiles(km)
 
 function changeText(unit)
 {
-  if(unit == "miles")
+  if(unit == "miles" || unit == "imperial")
   {
     document.getElementById("displayedEnergyConsumption").innerHTML = "320 Wh/mi";
     document.getElementById("typicalConsumption").innerHTML = "300 Wh/mi";
@@ -145,7 +145,7 @@ function changeText(unit)
     document.getElementById("chargeConsumptionLabel").innerHTML = "Average Wh/mi";
     document.getElementById("chargeConsumption").placeholder = "Enter Wh/mi";
   }
-  else if(unit == "km")
+  else if(unit == "km" || unit == "metric")
   {
     document.getElementById("displayedEnergyConsumption").innerHTML = "200 Wh/km";
     document.getElementById("typicalConsumption").innerHTML = "187 Wh/km";
@@ -160,19 +160,6 @@ function changeText(unit)
     document.getElementById("chargeConsumptionLabel").innerHTML = "Average Wh/km";
     document.getElementById("chargeConsumption").placeholder = "Enter Wh/km";
   }
-}
-
-if(getCookie("unit") == "miles")
-{
-  document.getElementById("milesRadio").click();
-}
-else if(getCookie("unit") == "km")
-{
-  document.getElementById("kilometersRadio").click();
-}
-else
-{
-  document.getElementById("kilometersRadio").click();
 }
 
 if(urltypicalConsumption = Number(getURLParameter('typical')))
@@ -191,4 +178,24 @@ if(urlunit = getURLParameter('unit'))
   {
     setUnit('miles');
   }
+}
+
+
+
+if(getCookie("typical"))
+{
+  document.forms["settingsForm"].elements["typical"].value = getCookie("typical");
+}
+
+if(getCookie("unit") == "miles" || getCookie("unit") == "imperial")
+{
+  document.getElementById("milesRadio").click();
+}
+else if(getCookie("unit") == "km" || getCookie("unit") == "metric")
+{
+  document.getElementById("kilometersRadio").click();
+}
+else
+{
+  document.getElementById("kilometersRadio").click();
 }
