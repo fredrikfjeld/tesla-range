@@ -100,15 +100,11 @@ function setCookie(name, value)
 }
 // End
 
-function setTypical()
+function setTypical(value)
 {
-  typical = document.forms["settingsForm"].elements["typical"].value;
+  typical = value;
+  document.getElementById("typical").value = typical;
   setCookie("typical", typical);
-}
-
-if(getCookie("typical"))
-{
-  document.forms["settingsForm"].elements["typical"].value = getCookie("typical");
 }
 
 function setUnit(unit)
@@ -116,6 +112,15 @@ function setUnit(unit)
   setCookie("unit", unit);
   changeText(unit);
   //alert(unit);
+}
+
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+if(getCookie("typical"))
+{
+  document.forms["settingsForm"].elements["typical"].value = getCookie("typical");
 }
 
 function kmToMiles(km)
@@ -129,7 +134,10 @@ function changeText(unit)
   {
     document.getElementById("displayedEnergyConsumption").innerHTML = "320 Wh/mi";
     document.getElementById("typicalConsumption").innerHTML = "300 Wh/mi";
-    document.getElementById("typical").value = 300;
+    if(!(getCookie("typical")))
+    {
+      document.getElementById("typical").value = 300;
+    }
     document.getElementById("typical").placeholder = 300;
     document.getElementById("rangeConsumptionLabel").innerHTML = "Average Wh/mi";
     document.getElementById("rangeConsumption").placeholder = "Enter Wh/mi";
@@ -141,7 +149,10 @@ function changeText(unit)
   {
     document.getElementById("displayedEnergyConsumption").innerHTML = "200 Wh/km";
     document.getElementById("typicalConsumption").innerHTML = "187 Wh/km";
-    document.getElementById("typical").value = 187;
+    if(!(getCookie("typical")))
+    {
+      document.getElementById("typical").value = 187;
+    }
     document.getElementById("typical").placeholder = 187;
     document.getElementById("rangeConsumptionLabel").innerHTML = "Average Wh/km";
     document.getElementById("rangeConsumption").placeholder = "Enter Wh/km";
@@ -162,4 +173,22 @@ else if(getCookie("unit") == "km")
 else
 {
   document.getElementById("kilometersRadio").click();
+}
+
+if(urltypicalConsumption = Number(getURLParameter('typical')))
+{
+  setTypical(urltypicalConsumption);
+  setCookie("typical", urltypicalConsumption);
+}
+
+if(urlunit = getURLParameter('unit'))
+{
+  if(urlunit == 'metric' || urlunit == 'km')
+  {
+    setUnit('km');
+  }
+  else if (urlunit == 'imperial' || urlunit == 'miles')
+  {
+    setUnit('miles');
+  }
 }

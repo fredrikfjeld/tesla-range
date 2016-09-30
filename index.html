@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="Range and charge calculator for Tesla and other EVs. Provide distance and average energy consumption and recieve your realistic range.">
-		<meta name="keywords" content="tesla,electric,car,range,calculator,charge,ev,evs,typical,rated,realistic,model s,p85,s85,s60,p85d,s85d">
+		<meta name="keywords" content="tesla,electric,car,range,calculator,charge,ev,evs,typical,rated,realistic,model s,model x,p85,s85,s60,p85d,s85d,s70,s70d,s90,s90d,p90d,p100d">
 
   <title>Tesla range calculator</title>
 
@@ -45,7 +45,7 @@
             </div>
             <div class="form-group">
               <label id="rangeConsumptionLabel" for="rangeConsumption">Average Wh/km</label>
-              <input type="number" class="form-control" id="rangeConsumption" placeholder="Enter Wh/km">
+              <input type="number" class="form-control" id="rangeConsumption" placeholder="Enter Wh/km" onkeyup="calculateRange()">
             </div>
             <button type="button" class="btn btn-default" onclick="calculateRange()">Calculate</button>
           </form>
@@ -104,8 +104,12 @@
 
               <div class="form-group">
                 <label for="typical">Typical consumption</label>
-                <input type="number" class="form-control" id="typical" placeholder="187" value="187" onblur="setTypical()">
+                <input type="number" class="form-control" id="typical" placeholder="187" value="187" onblur="setTypical(this.value)">
               </div>
+
+              <h3>URL settings</h3>
+              <p>You can also set these settings in the URL. After the address in the URL-bar write <br/><code>?unit=metric&typical=215</code> to automaticly set the units to metric and typical consumption to 215. This can be bookmarked to make sure your settings stay the same even if the car forgets the settings stored in cookies.</p>
+
             </form>
 
             <script type="text/javascript" src="scripts.js"></script>
