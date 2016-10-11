@@ -12,6 +12,18 @@
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="cover.css" rel="stylesheet">
 
+  <!-- Google font -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:light">
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+    }
+    a.visible-link {
+      text-decoration: underline;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -99,7 +111,7 @@
             <form class="form text-left" role="form" id="settingsForm">
               <h2>Typical consumption</h2>
               <p class="lead">Only change this if you know what you are doing.</p>
-              <p>Typical energy consumption is displayed as <span id="displayedEnergyConsumption">200 Wh/km</span> in the car, but <a href="https://www.youtube.com/watch?v=y7Xp7zSp7Rs">real world tests have revealed it to differ from car to car (Youtube-link)</a>.</p>
+              <p>Typical energy consumption is displayed as <span id="displayedEnergyConsumption">200 Wh/km</span> in the car, but <a class="visible-link" href="https://www.youtube.com/watch?v=y7Xp7zSp7Rs">real world tests have revealed it to differ from car to car (Youtube-link)</a>.</p>
               <p>It seems a typical energy consumption of <span id="typicalConsumption">187 Wh/km</span> is closer to the truth and is therefore a good default value. You can change it here if your car appears to have a different value.</p>
 
               <div class="form-group">
