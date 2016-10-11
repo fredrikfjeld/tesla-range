@@ -5,7 +5,7 @@ A small web app written in html and javascript that calculates range and need of
 
 ## Demo
 
-http://range.fjeld.io/
+http://range.teslastuff.net/
 
 
 ### TODO
